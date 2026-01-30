@@ -451,6 +451,9 @@ MiniDiff.config = {
 
     -- Whether to wrap around edges during hunk navigation
     wrap_goto = false,
+
+    -- Whether to ignore whitespace changes
+    ignore_whitespace_change = true,
   },
 }
 --minidoc_afterlines_end
@@ -996,6 +999,7 @@ H.setup_config = function(config)
   H.check_type('options.indent_heuristic', config.options.indent_heuristic, 'boolean')
   H.check_type('options.linematch', config.options.linematch, 'number')
   H.check_type('options.wrap_goto', config.options.wrap_goto, 'boolean')
+  H.check_type('options.ignore_whitespace_change', config.options.ignore_whitespace_change, 'boolean')
 
   return config
 end
@@ -1291,6 +1295,7 @@ H.update_buf_diff = vim.schedule_wrap(function(buf_id)
   H.vimdiff_opts.algorithm = options.algorithm
   H.vimdiff_opts.indent_heuristic = options.indent_heuristic
   H.vimdiff_opts.linematch = options.linematch
+  H.vimdiff_opts.ignore_whitespace_change = options.ignore_whitespace_change
 
   local buf_text, buf_lines = H.get_buftext(buf_id)
   local diff = vim.diff(buf_cache.ref_text, buf_text, H.vimdiff_opts)
